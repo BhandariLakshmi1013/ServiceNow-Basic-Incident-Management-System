@@ -1,0 +1,18 @@
+(function executeRule(current, previous /*null when async*/) {
+
+    var sd = current.short_description || current.u_short_description;
+    if (!sd) return; 
+
+    var desc = sd.toLowerCase();
+
+    if (desc.includes("urgent") || desc.includes("server down")) {
+        current.u_priority = "High";      
+    } else if (desc.includes("important") || desc.includes("asap")) {
+        current.u_priority = "Medium";    
+    } else {
+        current.u_priority = "Low";       
+    }
+
+    gs.info("Auto Priority set to: " + current.u_priority + " for: " + sd);
+
+})(current, previous);
